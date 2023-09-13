@@ -1,13 +1,23 @@
-// signup and login authentication logic goes here
+
 // require the UserModel
+const express = require("express");
+const signUp = require("../utils/SignUp");
+const mail = require("../utils/EmailService");
+const app = express();
 
-const home = (req, res) => {
-  res.send("<p>Welcome to Vyatha api.</p>");
-};
+const router = express.Router();
+const SECRET = '@ucTechnologies'
 
-const signUp = async () => {};
-const logIn = async () => {};
 
-module.exports = {
-  home
-};
+app.use("/adminSignUp", signUp);
+app.use("/mail", mail);
+
+
+module.exports = router;
+
+
+
+
+
+
+
