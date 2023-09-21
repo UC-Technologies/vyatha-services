@@ -16,7 +16,11 @@ jobs:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Setting up GitHub CLI"
-          gh auth login --with-token <<< $GH_TOKEN
+          if [[ -z "$GH_TOKEN" ]]; then
+            echo "GH_TOKEN is not set. Exiting..."
+            exit 1
+          fi
+          gh auth login --with-token "$GH_TOKEN"
           unset GH_TOKEN  # Unset GH_TOKEN after authentication
 
       - name: Check if the user is an admin
