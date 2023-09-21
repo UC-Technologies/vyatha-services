@@ -3,14 +3,21 @@ name: Restrict merges to admins
 on:
   pull_request:
     branches:
-      - main
       - dev
+      - master
 
 jobs:
   restrict-merges:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Set up GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Setting up GitHub CLI"
+          gh auth login --with-token <<< $GH_TOKEN
+
       - name: Check if the user is an admin
         run: |
           if [[ $(gh api users/me/role | jq -r '.role') != 'admin' ]]; then
