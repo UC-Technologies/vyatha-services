@@ -12,12 +12,16 @@ jobs:
 
     steps:
       - name: Set up GitHub CLI
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           echo "Setting up GitHub CLI"
-          gh auth login --with-token ${{ secrets.GITHUB_TOKEN }}
+          gh auth login --with-token <<< $GH_TOKEN
+          unset GH_TOKEN  # Unset GH_TOKEN after authentication
 
       - name: Check if the user is an admin
         run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
           if [[ $(gh api users/me/role | jq -r '.role') != 'admin' ]]; then
             echo "Only admins can merge pull requests into the main branch."
             exit 1
@@ -25,4 +29,5 @@ jobs:
 
       - name: Merge the pull request
         run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
           gh pr merge $PR_NUMBER
