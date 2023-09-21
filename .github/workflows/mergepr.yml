@@ -17,6 +17,7 @@ jobs:
         run: |
           echo "Setting up GitHub CLI"
           gh auth login --with-token <<< $GH_TOKEN
+          unset GH_TOKEN  # Unset GH_TOKEN after authentication
 
       - name: Check if the user is an admin
         run: |
