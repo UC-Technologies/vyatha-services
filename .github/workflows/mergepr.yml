@@ -1,0 +1,30 @@
+name: Restrict merges to admins
+
+on:
+  pull_request:
+    branches:
+      - dev
+      - master
+
+jobs:
+  restrict-merges:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up GitHub CLI
+        run: |
+          echo "Setting up GitHub CLI"
+          gh config set -h github.com oauth_token ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Check if the user is an admin
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          if [[ $(gh api users/me/role | jq -r '.role') != 'admin' ]]; then
+            echo "Only admins can merge pull requests into the main branch."
+            exit 1
+          fi
+
+      - name: Merge the pull request
+        run: |
+          PR_NUMBER="${{ github.event.pull_request.number }}"
+          gh pr merge $PR_NUMBER
