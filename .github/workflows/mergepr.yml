@@ -16,10 +16,11 @@ jobs:
 
       - name: Install GitHub CLI
         run: |
-          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-          sudo apt-add-repository https://cli.github.com/packages
-          sudo apt update
-          sudo apt install gh
+          # Download the GitHub CLI binary for Linux
+          curl -fsSL https://github.com/cli/cli/releases/latest/download/gh_linux_amd64.tar.gz -o gh.tar.gz
+          tar -xzf gh.tar.gz
+          sudo mv gh_* /usr/local/bin/gh
+          gh --version
 
       - name: Set up GitHub CLI
         run: |
@@ -39,4 +40,3 @@ jobs:
         run: |
           PR_NUMBER="${{ github.event.pull_request.number }}"
           gh pr merge $PR_NUMBER --auto
-
