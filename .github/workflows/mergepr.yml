@@ -11,6 +11,16 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Install GitHub CLI
+        run: |
+          sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+          sudo apt-add-repository https://cli.github.com/packages
+          sudo apt update
+          sudo apt install gh
+
       - name: Set up GitHub CLI
         run: |
           echo "Setting up GitHub CLI"
@@ -19,7 +29,8 @@ jobs:
       - name: Check if the user is an admin
         run: |
           PR_NUMBER="${{ github.event.pull_request.number }}"
-          if [[ $(gh api users/me/role | jq -r '.role') != 'admin' ]]; then
+          USER_ROLE=$(gh api users/me/role --jq '.role')
+          if [[ $USER_ROLE != '"admin"' ]]; then
             echo "Only admins can merge pull requests into the main branch."
             exit 1
           fi
@@ -27,4 +38,5 @@ jobs:
       - name: Merge the pull request
         run: |
           PR_NUMBER="${{ github.event.pull_request.number }}"
-          gh pr merge $PR_NUMBER
+          gh pr merge $PR_NUMBER --auto
+
