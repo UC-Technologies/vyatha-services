@@ -16,8 +16,8 @@ jobs:
 
       - name: Install GitHub CLI
         run: |
-          # Download the GitHub CLI binary for Linux
-          curl -fsSL https://github.com/cli/cli/releases/latest/download/gh_linux_amd64.tar.gz -o gh.tar.gz
+          # Download the GitHub CLI binary for Linux (replace URL with the correct one)
+          curl -fsSL https://github.com/cli/cli/releases/download/v2.35.0/gh_2.35.0_linux_amd64.tar.gz -o gh.tar.gz
           tar -xzf gh.tar.gz
           sudo mv gh_* /usr/local/bin/gh
           gh --version
