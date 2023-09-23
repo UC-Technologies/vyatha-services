@@ -14,20 +14,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install GitHub CLI
-        run: |
-          # Download the GitHub CLI binary for Linux (replace URL with the correct one)
-          curl -fsSL https://github.com/cli/cli/releases/download/v2.35.0/gh_2.35.0_linux_amd64.tar.gz -o gh.tar.gz
-          tar -xzf gh.tar.gz
-          sudo mv gh_* /usr/local/bin/gh
-          gh --version
+      # - name: Install GitHub CLI
+      #   run: |
+      #     # Download the GitHub CLI binary for Linux (replace URL with the correct one)
+      #     curl -fsSL https://github.com/cli/cli/releases/download/v2.35.0/gh_2.35.0_linux_amd64.tar.gz -o gh.tar.gz
+      #     tar -xzf gh.tar.gz
+      #     sudo mv gh_* /usr/local/bin/gh
+      #     gh --version
 
-      - name: Set up GitHub CLI
-        run: |
-          echo "Setting up GitHub CLI"
-          gh config set -h github.com $GITHUB_TOKEN
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # - name: Set up GitHub CLI
+      #   run: |
+      #     echo "Setting up GitHub CLI"
+      #     gh config set -h github.com $GITHUB_TOKEN
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check if the user is an admin
         run: |
