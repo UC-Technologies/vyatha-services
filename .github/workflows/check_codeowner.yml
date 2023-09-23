@@ -18,16 +18,16 @@ jobs:
       - name: Get the authenticated GitHub user
         id: get_github_user
         run: |
-          AUTHENTICATED_USER=$(curl -s -H "Authorization: token ${{ github.token }}" \
+          AUTHENTICATED_USER=$(curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
               https://api.github.com/user | jq -r .login)
           echo "Authenticated GitHub user: $AUTHENTICATED_USER"
-          echo "::set-output name=authenticated_user::$AUTHENTICATED_USER"
+          echo "authenticated_user=$AUTHENTICATED_USER" >> $GITHUB_ENV
         shell: bash
 
       - name: Check CODEOWNERS
         run: |
           # Get the authenticated GitHub user
-          AUTHENTICATED_USER=${{ steps.get_github_user.outputs.authenticated_user }}
+          AUTHENTICATED_USER=$GITHUB_ENV.authenticated_user
 
           # Check if the authenticated user is in the CODEOWNERS file
           if grep -q "$AUTHENTICATED_USER" .github/CODEOWNERS; then
