@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: Install the gh command
+        run: sudo apt install gh
+
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Install GitHub CLI
-        uses: actions/setup-github-cli@v2
 
       - name: Set up GitHub CLI
         run: echo "GH_TOKEN=${{ github.token }}" >> $GITHUB_ENV
