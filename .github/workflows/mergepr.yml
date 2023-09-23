@@ -25,9 +25,9 @@ jobs:
       - name: Set up GitHub CLI
         run: |
           echo "Setting up GitHub CLI"
-          gh config set -h github.com $TOKEN
+          gh config set -h github.com $GITHUB_TOKEN
         env:
-          TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Check if the user is an admin
         run: |
