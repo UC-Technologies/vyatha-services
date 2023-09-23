@@ -1,23 +1,33 @@
-name: Check Codeowner
+name: Verify User in CODEOWNERS
 
 on:
   pull_request:
-    branches: [ dev, main ]
+    types:
+      - opened
+      - synchronize
 
 jobs:
-  check-codeowner:
+  check_codeowners:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v3
-
-      - name: Get codeowner
+      - name: Check CODEOWNERS
+        id: check-owners
         run: |
-          CODEOWNER=$(git cat-file -p HEAD:.CODEOWNERS)
-
-      - name: Check if user is mentioned in codeowner
-        run: |
-          if [[ ! "$CODEOWNER" =~ "@${{ github.actor }}" ]]; then
-            echo "User is not mentioned in codeowner file, thus cannot merge PR"
+          # Extract the GitHub username of the user who triggered the workflow
+          GITHUB_USERNAME=$(jq -r '.pull_request.user.login' "$GITHUB_EVENT_PATH")
+          
+          # Get the CODEOWNERS file content
+          CODEOWNERS_CONTENT=$(cat .github/CODEOWNERS)
+          
+          # Check if the GitHub username exists in CODEOWNERS
+          if [[ $CODEOWNERS_CONTENT =~ (^|[[:space:]])@$GITHUB_USERNAME($|[[:space:]]) ]]; then
+            echo "User $GITHUB_USERNAME is mentioned in CODEOWNERS"
+            exit 0
+          else
+            echo "User $GITHUB_USERNAME is not mentioned in CODEOWNERS"
             exit 1
           fi
+          
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
