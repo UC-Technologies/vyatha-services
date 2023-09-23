@@ -15,18 +15,25 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Get the authenticated GitHub user
+        id: get_github_user
+        run: |
+          AUTHENTICATED_USER=$(curl -s -H "Authorization: token ${{ github.token }}" \
+              https://api.github.com/user | jq -r .login)
+          echo "Authenticated GitHub user: $AUTHENTICATED_USER"
+          echo "::set-output name=authenticated_user::$AUTHENTICATED_USER"
+        shell: bash
+
       - name: Check CODEOWNERS
         run: |
-          # Get the author of the pull request
-          AUTHOR=${{ github.actor }}
+          # Get the authenticated GitHub user
+          AUTHENTICATED_USER=${{ steps.get_github_user.outputs.authenticated_user }}
 
-          # Check if the author is in the CODEOWNERS file
-          if grep -q "$AUTHOR" .github/CODEOWNERS; then
+          # Check if the authenticated user is in the CODEOWNERS file
+          if grep -q "$AUTHENTICATED_USER" .github/CODEOWNERS; then
             echo "Authorized to merge"
           else
             echo "Not authorized to merge"
             exit 1
           fi
         working-directory: ${{ github.workspace }}
-
-      
