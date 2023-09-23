@@ -1,8 +1,8 @@
 name: Check Codeowner
 
 on:
-  push:
-    branches: [ main ]
+  pull_request:
+    branches: [ dev, main ]
 
 jobs:
   check-codeowner:
@@ -18,6 +18,6 @@ jobs:
       - name: Check if user is mentioned in codeowner
         run: |
           if [[ ! "$CODEOWNER" =~ "@${{ github.actor }}" ]]; then
-            echo "User is not mentioned in codeowner file"
+            echo "User is not mentioned in codeowner file, thus cannot merge PR"
             exit 1
           fi
