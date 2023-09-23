@@ -1,0 +1,23 @@
+name: Check Codeowner
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  check-codeowner:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Get codeowner
+        run: |
+          CODEOWNER=$(git cat-file -p HEAD:.CODEOWNERS)
+
+      - name: Check if user is mentioned in codeowner
+        run: |
+          if [[ ! "$CODEOWNER" =~ "@${{ github.actor }}" ]]; then
+            echo "User is not mentioned in codeowner file"
+            exit 1
+          fi

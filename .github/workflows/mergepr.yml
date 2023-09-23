@@ -25,7 +25,7 @@ jobs:
           PR_NUMBER="${{ github.event.pull_request.number }}"
           USER_ROLE=$(gh api users/me/role --jq '.role')
           if [[ $USER_ROLE != '"admin"' ]]; then
-            echo "Only admins can merge pull requests into the main branch."
+            echo "Only admins can merge pull requests"
             exit 1
           fi
 
