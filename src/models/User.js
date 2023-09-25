@@ -1,15 +1,12 @@
 // signup model goes here
 const express= require('express');
 const app= express();
-const path= require('path');
-const collection= require("mongoose");
+const mongoose= require("mongoose");
 const bcrypt= require("bcrypt");
 
 app.use(express.json());
 
-// app.get('/signup',(req,res)=>{
-//     res.render([data]);
-// })
+
 const connectToDb = require("./DbConnection");
 
 connectToDb()
