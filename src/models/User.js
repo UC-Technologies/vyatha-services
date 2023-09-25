@@ -56,7 +56,7 @@ const SignUp= new mongoose.model("MONGODBSECRET",SignUpSchema);
 app.post("/signup",async(req,res)=>{
     try{
 
-        const userExist= await SignUp.findOne({email: email});
+        const userExist= await SignUp.findOne({email: req.body.email});
         if(userExist){
             return res.status(422).json({error:"User already exists"});
         }
