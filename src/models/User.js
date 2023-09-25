@@ -77,6 +77,7 @@ app.post("/signup",async(req,res)=>{
 
 
             const signedUp= await studentSignUp.save();
+            console.log(signedUp);
             res.status(201).render("index");
         }else{
             return res.status(422).json({error:"Password not matching"});
