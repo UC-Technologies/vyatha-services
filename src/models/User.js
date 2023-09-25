@@ -1,4 +1,5 @@
 // signup model goes here
+
 const express= require('express');
 const app= express();
 const path= require('path');
@@ -89,3 +90,4 @@ app.post("/signup",async(req,res)=>{
         res.status(400).send(error);
     }
 });
+
