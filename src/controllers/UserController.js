@@ -17,6 +17,7 @@
 const User  = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
+const mongoose= require('mongoose');
 
 const home = (req, res) => {
   res.send("<p>Welcome to Vyatha api.</p>");
@@ -38,7 +39,7 @@ const signUp = async () => {
   app.post("/signup",async(req,res)=>{
       try{
 
-          const userExist= await SignUp.findOne({email: email});
+          const userExist= await SignUp.findOne({email: req.email});
           if(userExist){
               return res.status(422).json({error:"User already exists"});
           }
