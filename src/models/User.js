@@ -1,8 +1,18 @@
 // signup model goes here
+
 const express= require('express');
 const app= express();
 const mongoose= require("mongoose");
 
+
+const bcrypt= require("bcrypt");
+
+app.use(express.json());
+
+
+const connectToDb = require("./DbConnection");
+
+connectToDb()
 
 const SignUpSchema= new mongoose.Schema({
     name:{
@@ -35,4 +45,5 @@ const SignUpSchema= new mongoose.Schema({
 })
 
 
-module.exports = SignUpSchema;
+module.export = SignUpSchema
+
