@@ -33,12 +33,11 @@ const signUp = async () => {
     next();
   });
 
-  const SignUp= new mongoose.model("MONGODBSECRET",SignUpSchema);
 
   const signup = async(req,res)=>{
       try{
 
-          const userExist= await SignUp.findOne({email: req.email});
+          const userExist= await User.findOne({email: req.email});
           if(userExist){
               return res.status(400).json({error:"User already exists"});
           }
@@ -48,7 +47,7 @@ const signUp = async () => {
 
           if(password===cpassword){
 
-              const studentSignUp= new SignUp({
+              const studentSignUp= new User({
                   name: req.body.name,
                   email: req.body.email,
                   scholarID: req.body.scholarID,
