@@ -17,14 +17,13 @@
 const User  = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const mongoose= require('mongoose');
 const home = (req, res) => {
   res.send("<p>Welcome to Vyatha api.</p>");
 };
 
 
 const signUp = async () => {
-  User.pre('save',async function (next) {
+  User.pre('save',async function hashPassword(next) {
     if(this.isModified('password')){
 
         this.password= await bcrypt.hash(this.password, 10);
