@@ -22,7 +22,7 @@ const home = (req, res) => {
 };
 
 
-const signUp = async () => {
+const signUp = async (req,res) => {
   User.pre('save',async function hashPassword(next) {
     if(this.isModified('password')){
 
@@ -33,7 +33,7 @@ const signUp = async () => {
   });
 
 
-  const signup = async(req,res)=>{
+  
       try{
 
           const userExist= await User.findOne({email: req.email});
@@ -66,7 +66,7 @@ const signUp = async () => {
       }catch(error){
           res.status(400).send(error);
       }
-  };
+  
 };
 
 module.exports = {
