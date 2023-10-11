@@ -14,11 +14,10 @@
 
 // userController.js
 
-const User  = require('../models/User');
+const SignUpSchema  = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose= require('mongoose');
-
 const home = (req, res) => {
   res.send("<p>Welcome to Vyatha api.</p>");
 };
@@ -36,12 +35,12 @@ const signUp = async () => {
 
   const SignUp= new mongoose.model("MONGODBSECRET",SignUpSchema);
 
-  app.post("/signup",async(req,res)=>{
+  const signup = async(req,res)=>{
       try{
 
           const userExist= await SignUp.findOne({email: req.email});
           if(userExist){
-              return res.status(422).json({error:"User already exists"});
+              return res.status(400).json({error:"User already exists"});
           }
 
           const password= req.body.password;
@@ -69,9 +68,8 @@ const signUp = async () => {
       }catch(error){
           res.status(400).send(error);
       }
-  });
+  };
 };
-const logIn = async () => {};
 
 module.exports = {
   home,
