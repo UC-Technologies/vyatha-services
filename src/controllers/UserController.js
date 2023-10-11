@@ -14,7 +14,7 @@
 
 // userController.js
 
-const SignUpSchema  = require('../models/User');
+const User  = require('../models/User');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const mongoose= require('mongoose');
@@ -24,7 +24,7 @@ const home = (req, res) => {
 
 
 const signUp = async () => {
-  SignUpSchema.pre('save',async function(next){
+  User.pre('save',async function (next) {
     if(this.isModified('password')){
 
         this.password= await bcrypt.hash(this.password, 10);
@@ -58,7 +58,7 @@ const signUp = async () => {
               })
 
 
-              const signedUp= await studentSignUp.save();
+              await studentSignUp.save();
               res.status(201).render("index");
           }else{
               return res.status(401).json({error:"Password not matching"});

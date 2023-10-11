@@ -37,5 +37,5 @@ const SignUpSchema= new mongoose.Schema({
     }
 })
 
-
-module.exports = mongoose.model('User', SignUpSchema);
+const User =mongoose.model('User', SignUpSchema);
+module.exports = User;
