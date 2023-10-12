@@ -69,10 +69,6 @@ const signUp = async (req,res) => {
   
 };
 
-module.exports = {
-  home,
-  signUp
-};
 
 const studentLogin = async (req, res) => {
   const { email, password } = req.body;
@@ -146,5 +142,6 @@ module.exports = {
   home,
   studentLogin,
   adminLogin,
+  signUp,
 };
 
