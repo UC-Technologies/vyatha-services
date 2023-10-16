@@ -2,12 +2,17 @@ const express = require("express");
 const router = express.Router();
 const home = require("../controllers/Home");
 
+<<<<<<< HEAD
+router.get('/', userController.home);
+router.post("/signup", userController.signUp);
+=======
 // student imports
 const studentLogin = require("../controllers/LocalAuth/student/user");
 const editStudentProfile = require("../controllers/LocalAuth/student/EditProfile");
 const deleteAcc = require("../controllers/LocalAuth/student/DeleteAccount");
 const forgotPwdStudent = require("../controllers/LocalAuth/student/ForgotPwd");
 const dashboardStudent = require("../controllers/LocalAuth/student/Dashboard");
+>>>>>>> 50e59e7eced0e09afb9a77799a3d8cc11858aa08
 
 // admin imports
 const adminLogin = require("../controllers/LocalAuth/admin/User");
