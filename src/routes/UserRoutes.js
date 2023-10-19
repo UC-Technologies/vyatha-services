@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const home = require("../controllers/Home");
+const verifyToken = require("../middlewares/VerifyToken")
 
 // student imports
 const studentLogin = require("../controllers/LocalAuth/student/user");
@@ -24,13 +25,13 @@ router.post("/student/login", studentLogin.studentLogin);
 router.put("/student/edit/profile", editStudentProfile.editStudentProfile);
 router.delete("/student/delete", deleteAcc.deleteAcc);
 router.post("/student/forgotpwd", forgotPwdStudent.forgotPwdStudent);
-router.get("/student/dashboard", dashboardStudent.dashboardStudent);
+router.get("/student/dashboard", verifyToken.verifyToken, dashboardStudent.dashboardStudent);
 
 // admin endpoint
 router.post("/admin/login", adminLogin.adminLogin);
 router.put("/admin/edit/profile", editAdminProfile.editAdminProfile);
 router.delete("/admin/delete", deleteAccAdmin.deleteAccAdmin);
 router.post("/admin/forgotpwd", forgotPwdAdmin.forgotPwdAdmin);
-router.get("/admin/dashboard", dashboardAdmin.dashboardAdmin);
+router.get("/admin/dashboard", verifyToken.verifyToken, dashboardAdmin.dashboardAdmin);
 
 module.exports = router;

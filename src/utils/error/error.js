@@ -9,5 +9,6 @@ module.exports = {
   wrongPwdEmail: "Please try with correct admin credentials",
   serverError: "Internal server error",
   invalidToken: "Invalid token",
-  noToken: "Token not found"
+  noToken: "Token not found",
+  noAccess: "Access denied",
 };
